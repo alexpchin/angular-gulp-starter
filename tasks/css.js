@@ -10,7 +10,7 @@ const order            = require('gulp-order');
 const sourcemaps       = require('gulp-sourcemaps');
 const rename           = require('gulp-rename');
 const gulpIf           = require('gulp-if');
-const browserSync      = require('browser-sync').create();
+const browserSync      = require('browser-sync');
 const config           = require('../package').gulp;
 
 const fetchVendorCss = () => {

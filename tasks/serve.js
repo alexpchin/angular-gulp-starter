@@ -3,29 +3,30 @@ const nodemon          = require('gulp-nodemon');
 const browserSync      = require('browser-sync').create();
 const config           = require('../package').gulp;
 
-const serveDev = () => {
+const serve = () => {
   let started = false;
 
-  nodemon({
-    script: config.main.server,
-    watch: [config.main.server, config.main.gulpfile, config.main.packageJson],
-    env: { NODE_ENV: 'development' }
-  })
-  .on('start', (cb) => {
-    if (!started) {
-      cb();
-      started = true;
-    }
-  })
-  .on('restart', () => console.log('[nodemon] restarted dev server.'));
-
-  return browserSync.init(null, {
-    proxy: 'http://localhost:3000',
+  browserSync.init(null, {
+    proxy: 'http://localhost:4000',
     files: ['public/**/*.*'],
     browser: 'google chrome',
-    port: 7000
+    port: 7000,
+    reloadDelay: 1000
+  });
+
+  return nodemon({
+    script: config.main.server,
+    ignore: [config.destDir, config.srcDir],
+    env: { NODE_ENV: 'development' }
+  })
+  .on('start', () => {
+    if (!started) {
+      browserSync.reload();
+    } else {
+      started = false;
+    }
   });
 };
 
-gulp.task('serve-dev', serveDev);
-module.exports = serveDev;
+gulp.task('serve', serve);
+module.exports = serve;

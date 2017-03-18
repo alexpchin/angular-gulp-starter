@@ -2,7 +2,7 @@ const gulp             = require('gulp');
 const clean            = require('gulp-clean');
 const eventStream      = require('event-stream');
 const imagemin         = require('gulp-imagemin');
-const browserSync      = require('browser-sync').create();
+const browserSync      = require('browser-sync');
 const config           = require('../package').gulp;
 
 const cleanImages = () => {
